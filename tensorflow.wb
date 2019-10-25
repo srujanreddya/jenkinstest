@@ -1,0 +1,53 @@
+#!/usr/bin/env bdwb
+#
+# YOUR_ORGANIZATION_NAME must be replaced with a valid organization name. Please
+# refer to 'help builder organization' for details.
+builder organization --name BLUEDATA
+
+catalog new --distroid TFJupyter-CPU --name "TensorFlow 1.9.0 CPU with Jupyterhub" --desc "TF Jupyterhub" --categories DataScience --version 2.0
+
+## Define all node roles for the virtual cluster.
+role add controller 1
+role add jupyter 0+
+
+## Auto generation of startscript
+
+# Instructions for autogenerating a simple appconfig bundle.
+appconfig autogen --new --configapi 7
+service add --srvcid jupyterhub --name "Jupyterhub" --scheme "http" --port 8000   \
+        --path "/" --display    \
+            --sysctl jupyterhub \
+            --onroles controller
+
+
+service add --srvcid jupyter-notebook --name "Jupyter Notebook" --scheme "http" --port 8888   \
+            --path "/" --display  \
+            --sysctl jupyter-server  \
+            --onroles jupyter
+           
+appconfig autogen --pkgfile jupyterhub_config.py --destdir /etc/jupyterhub
+appconfig autogen --pkgfile jupyterhub start_jupyterhub.sh start_jupyter.sh jupyter-server  --destdir /etc/init.d/
+appconfig autogen --pkgfile jupyter_notebook_config.py --destdir /root/.jupyter/
+appconfig autogen --replace /etc/jupyterhub/jupyterhub_config.py \
+                  --pattern @@@@IP@@@@ --macro GET_FQDN_LIST controller
+appconfig autogen --replace /root/.jupyter/jupyter_notebook_config.py    \
+                  --pattern @@@@IP@@@@ --macro "GET_NODE_FQDN"
+
+appconfig autogen --generate
+appconfig package
+
+##logo
+logo file --filepath tensorflow-logo.png
+
+################################################################################
+#                        Catalog package for CentOS                            #
+################################################################################
+image build --basedir image/centos --image-repotag bluedata/tensorflowservingc:1.0
+image package --image-repotag bluedata/tensorflowservingc:1.0 --os centos7  --roles controller jupyter
+ 
+#image pull -i ilovepython/tfserving:latest
+#image package --image-repotag ilovepython/tfserving:latest --os centos7  --roles controller jupyter
+
+catalog save --filepath staging/tensorflow.json --force
+sources package
+catalog package

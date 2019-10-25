@@ -1,0 +1,110 @@
+{
+    "catalog_api_version": "4", 
+    "config": {
+        "config_meta": {}, 
+        "config_choices": [], 
+        "node_services": [
+            {
+                "service_ids": [
+                    "ssh", 
+                    "jupyterhub"
+                ], 
+                "role_id": "controller"
+            }, 
+            {
+                "service_ids": [
+                    "ssh", 
+                    "jupyter-notebook"
+                ], 
+                "role_id": "jupyter"
+            }
+        ], 
+        "selected_roles": [
+            "controller", 
+            "jupyter"
+        ]
+    }, 
+    "label": {
+        "name": "TensorFlow 1.9.0 CPU with Jupyterhub", 
+        "description": "TF Jupyterhub"
+    }, 
+    "distro_id": "bluedata/tfjupyter-cpu", 
+    "version": "2.0", 
+    "registry": {
+        "authentication_enabled": false, 
+        "url": "", 
+        "content_trust_enabled": false
+    }, 
+    "services": [
+        {
+            "endpoint": {
+                "port": "22", 
+                "is_dashboard": false
+            }, 
+            "id": "ssh", 
+            "label": {
+                "name": "SSH"
+            }
+        }, 
+        {
+            "endpoint": {
+                "url_scheme": "http", 
+                "path": "/", 
+                "is_dashboard": true, 
+                "port": "8000"
+            }, 
+            "id": "jupyterhub", 
+            "label": {
+                "name": "Jupyterhub"
+            }
+        }, 
+        {
+            "endpoint": {
+                "url_scheme": "http", 
+                "path": "/", 
+                "is_dashboard": true, 
+                "port": "8888"
+            }, 
+            "id": "jupyter-notebook", 
+            "label": {
+                "name": "Jupyter Notebook"
+            }
+        }
+    ], 
+    "logo": {
+        "checksum": "916d7cfb85651e5f2ba3e152bef691f6", 
+        "source_file": "tensorflow-logo.png"
+    }, 
+    "setup_package": {
+        "config_api_version": 7, 
+        "checksum": "ad59836b4f1d0120e34a039b71cc6bc7", 
+        "source_file": "appconfig.tgz"
+    }, 
+    "node_roles": [
+        {
+            "image": {
+                "imageOSMajor": "7", 
+                "checksum": "07d7ba6fcfb24d017d55e8e703dc2e37", 
+                "imageOS": "centos", 
+                "source_file": "bluedata-tensorflowservingc-1.0.tar.gz", 
+                "imageRepotag": "bluedata/tensorflowservingc:1.0"
+            }, 
+            "cardinality": "1", 
+            "id": "controller"
+        }, 
+        {
+            "image": {
+                "imageOSMajor": "7", 
+                "checksum": "07d7ba6fcfb24d017d55e8e703dc2e37", 
+                "imageOS": "centos", 
+                "source_file": "bluedata-tensorflowservingc-1.0.tar.gz", 
+                "imageRepotag": "bluedata/tensorflowservingc:1.0"
+            }, 
+            "cardinality": "0+", 
+            "id": "jupyter"
+        }
+    ], 
+    "categories": [
+        "DataScience"
+    ]
+}
