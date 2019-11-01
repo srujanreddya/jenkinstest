@@ -1,0 +1,66 @@
+{
+    "catalog_api_version": 5, 
+    "config": {
+        "config_meta": {}, 
+        "config_choices": [], 
+        "node_services": [
+            {
+                "service_ids": [
+                    "ssh"
+                ], 
+                "role_id": "utility"
+            }
+        ], 
+        "selected_roles": [
+            "utility"
+        ]
+    }, 
+    "label": {
+        "name": "CentOS 6.x", 
+        "description": "CentOS 6.x without any pre-installed application frameworks."
+    }, 
+    "distro_id": "bluedata/centos6", 
+    "version": "3.1", 
+    "registry": {
+        "authentication_enabled": false, 
+        "url": "", 
+        "content_trust_enabled": false
+    }, 
+    "services": [
+        {
+            "endpoint": {
+                "port": "22", 
+                "is_dashboard": false
+            }, 
+            "id": "ssh", 
+            "label": {
+                "name": "SSH"
+            }
+        }
+    ], 
+    "logo": {
+        "checksum": "1a668448798b23eba51aeacdcb454df4", 
+        "source_file": "Logo_CentOS.png"
+    }, 
+    "setup_package": {
+        "config_api_version": 9, 
+        "checksum": "24331420da103932f980ca2f2426e16a", 
+        "source_file": "appconfig.tgz"
+    }, 
+    "node_roles": [
+        {
+            "image": {
+                "imageOSMajor": "6", 
+                "checksum": "027b1eedb2dfb9746b506397fd6b4726", 
+                "imageOS": "centos", 
+                "source_file": "docker.io-bluedata-centos6-2.2.tar.gz", 
+                "imageRepotag": "docker.io/bluedata/centos6:2.2"
+            }, 
+            "cardinality": "1+", 
+            "id": "utility"
+        }
+    ], 
+    "categories": [
+        "Utility"
+    ]
+}
