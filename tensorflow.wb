@@ -4,7 +4,7 @@
 # refer to 'help builder organization' for details.
 builder organization --name BLUEDATA
 
-catalog new --distroid TFJupyter-CPU --name "TensorFlow 1.9.0 CPU with Jupyterhub" --desc "TF Jupyterhub" --categories DataScience --version 2.0
+catalog new --distroid TFJupyter-CPU --name "TensorFlow 1.9.0 CPU with Jupyterhub" --desc "TF Jupyterhub" --categories DataScience --version 2.0 --epic 4.0
 
 ## Define all node roles for the virtual cluster.
 role add controller 1
